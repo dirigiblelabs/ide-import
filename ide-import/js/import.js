@@ -131,13 +131,9 @@ importView.controller('ImportViewController', [
             });
         };
 
-        messageHub.onDidReceiveMessage(
-            'ide.workspaces.changed',
-            function () {
-                $scope.reloadWorkspaceList();
-            },
-            true
-        );
+        messageHub.onWorkspacesModified(function () {
+            $scope.reloadWorkspaceList();
+        });
 
         // Initialization
         $scope.getViewParameters();
