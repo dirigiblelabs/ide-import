@@ -101,13 +101,13 @@ importView.controller('ImportViewController', [
         };
 
         $scope.uploader.onCompleteAll = function () {
-            if (!$scope.importRepository) {
-                if ($scope.inDialog) {
-                    // Temporary, publishes all files in the import directory, not just imported ones
-                    messageHub.announceWorkspaceChanged({ name: $scope.selectedWorkspace.name, publish: { path: $scope.uploadPath } });
-                } else {
-                    messageHub.announceWorkspaceChanged({ name: $scope.selectedWorkspace.name, publish: { workspace: true } });
-                }
+            if ($scope.importRepository) {
+                messageHub.announceRepositoryModified();
+            } else if ($scope.inDialog) {
+                // Temporary, publishes all files in the import directory, not just imported ones
+                messageHub.announceWorkspaceChanged({ name: $scope.selectedWorkspace.name, publish: { path: $scope.uploadPath } });
+            } else {
+                messageHub.announceWorkspaceChanged({ name: $scope.selectedWorkspace.name, publish: { workspace: true } });
             }
         };
 
